@@ -115,7 +115,7 @@
       });
     });
 
-    describe('throttle, when given a wait of 100ms', function() {
+    xdescribe('throttle, when given a wait of 100ms', function() {
       var callback;
 
       beforeEach(function() {
