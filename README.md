@@ -37,15 +37,7 @@ This is a project I completed as a student at Hack Reactor. This project was wor
 - _.memoize()
 - _.delay()
 - _.shuffle()
-- _.throttle()
 
-
-**Some code may be written in ES6 and may require to be transpiled in order to be tested**.
-
-### Requirements
-
-ES6 enabled on chrome `chrome://flags/#enable-javascript-harmony.`
-Babeljs.io for transipiling.
 
 ### Testing
 
