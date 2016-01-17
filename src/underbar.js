@@ -363,9 +363,9 @@
 
   // Calls the method named by functionOrKey on each value in the list.
   // Note: You will need to learn a bit about .apply to complete this.
-  _.invoke = function(collection, functionOrKey, args)  => {
-    return _.map(collection, item => {
-      if (typeof(functionOrKey) === "function") {
+  _.invoke = function (collection, functionOrKey, args) {
+    return _.map(collection, function (item) {
+      if (typeof functionOrKey === "function") {
         return functionOrKey.apply(item, args);
       } else {
         return item[functionOrKey].apply(item, args);
@@ -377,12 +377,12 @@
   // If iterator is a string, sort objects by that property with the name
   // of that string. For example, _.sortBy(people, 'name') should sort
   // an array of people by their name.
-  _.sortBy = function(collection, iterator) => {
-    return collection.sort(function(left, right){
-      if (typeof(iterator) === 'string') {
-        return (left[iterator] > right[iterator]) ? 1 : -1;
+  _.sortBy = function (collection, iterator) {
+    return collection.sort(function (left, right) {
+      if (typeof iterator === 'string') {
+        return left[iterator] > right[iterator] ? 1 : -1;
       } else {
-        return (iterator(left) > iterator(right)) ? 1 : -1;
+        return iterator(left) > iterator(right) ? 1 : -1;
       }
     });
   };
@@ -422,11 +422,33 @@
   // Takes an arbitrary number of arrays and produces an array that contains
   // every item shared between all the passed-in arrays.
   _.intersection = function() {
+    var intersect = [];
+    var arrayCount = arguments.length;
+    var initialArray = arguments[0];
+    for (var i = 0; i < initialArray.length; i++) {
+      var item = initialArray[i];
+      if (_.contains(intersect, item)) {
+        continue;
+      }
+      for (var j = 1; j < arrayCount; j++) {
+        if (!_.contains(arguments[j], item)) {
+          break;
+        }
+      }
+      if (j === arrayCount) {
+        intersect.push(item);
+      }
+    }
+    return intersect;
   };
 
   // Take the difference between one array and a number of other arrays.
   // Only the elements present in just the first array will remain.
-  _.difference = function(array) {
+  _.difference = function (array) {
+      var allTheRest = _.flatten(Array.prototype.slice.call(arguments, 1));
+      return _.filter(array, function (value) {
+          return !_.contains(allTheRest, value);
+      });
   };
 
   // Returns a function, that, when invoked, will only be triggered at most once
